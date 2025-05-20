@@ -23,3 +23,23 @@ def fetch_all_cars():
     conn.close()
 
     return cars
+
+def fetch_relevant_cars(query, params):
+    conn = psycopg2.connect(
+        host=os.getenv('HOST'),
+        dbname=os.getenv('DBNAME'),
+        user=os.getenv('USER'),
+        port=os.getenv('PORT'),
+        password=os.getenv('PASSWORD')
+    )
+
+    cur = conn.cursor()
+
+    cur.execute(query, params)
+
+    cars = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return cars
